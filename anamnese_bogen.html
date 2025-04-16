@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Anamnesebogen für den Arztbesuch</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+      background-color: #f4f4f4;
+    }
+    h2 {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    .section {
+      background-color: white;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="anamnesebogen">
+    <div id="formularinhalt">
+      <h1>Anamnesebogen für den Arztbesuch</h1>
+
+      <div class="section">
+        <h2>Persönliche Daten</h2>
+        <label>Name: <input type="text" name="name" required></label>
+        <label>Geburtsdatum: <input type="date" name="geburtsdatum" required></label>
+        <label>Geschlecht:</label>
+        <div class="checkbox-group">
+          <label><input type="radio" name="geschlecht" value="Männlich" required> Männlich</label>
+          <label><input type="radio" name="geschlecht" value="Weiblich"> Weiblich</label>
+          <label><input type="radio" name="geschlecht" value="Divers"> Divers</label>
+        </div>
+        <label>Adresse: <input type="text" name="adresse" required></label>
+        <label>Telefonnummer: <input type="text" name="telefonnummer"></label>
+        <label>E-Mail: <input type="email" name="email"></label>
+        <label>Versicherungsnummer: <input type="text" name="versicherungsnummer"></label>
+      </div>
+
+      <div class="section">
+        <h2>Aktuelle Beschwerden</h2>
+        <label>Beschwerden: <textarea name="beschwerden" rows="4" required></textarea></label>
+        <label>Beschwerden seit:</label>
+        <div class="checkbox-group">
+          <label><input type="radio" name="dauer" value="Weniger als eine Woche" required> <1 Woche</label>
+          <label><input type="radio" name="dauer" value="1-2 Wochen"> 1–2 Wochen</label>
+          <label><input type="radio" name="dauer" value="1 Monat"> 1 Monat</label>
+          <label><input type="radio" name="dauer" value="Länger als 1 Monat"> >1 Monat</label>
+        </div>
+        <label>Beschwerden (1-10): <input type="number" name="schmerzskala" min="1" max="10"></label>
+        <label>Begleitsymptome:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="symptome" value="Fieber"> Fieber</label>
+          <label><input type="checkbox" name="symptome" value="Müdigkeit"> Müdigkeit</label>
+          <label><input type="checkbox" name="symptome" value="Gewichtsverlust"> Gewichtsverlust</label>
+          <label><input type="checkbox" name="symptome" value="Schlafstörungen"> Schlafstörungen</label>
+          <label><input type="checkbox" name="symptome" value="Appetitlosigkeit"> Appetitlosigkeit</label>
+          <label><input type="checkbox" name="symptome" value="Schmerzen"> Schmerzen</label>
+          <label><input type="checkbox" name="symptome" value="Übelkeit/Erbrechen"> Übelkeit/Erbrechen</label>
+          <label><input type="checkbox" name="symptome" value="Atembeschwerden"> Atembeschwerden</label>
+          <label><input type="checkbox" name="symptome" value="Schwindel"> Schwindel</label>
+          <label><input type="checkbox" name="symptome" value="Hautausschläge"> Hautausschläge</label>
+          <label><input type="checkbox" name="symptome" value="Andere"> Andere</label>
+        </div>
+        <label>Details (z. B. Schmerzort, Art, etc.): <input type="text" name="schmerzdaten"></label>
+      </div>
+
+      <!-- Weitere Sektionen hier nach demselben Muster ... -->
+      
+      <div class="section">
+        <h2>Sonstiges</h2>
+        <label>Besondere Anliegen: <textarea name="anliegen" rows="3"></textarea></label>
+        <label>Weitere Infos: <textarea name="weitereInfos" rows="3"></textarea></label>
+        <label>Alternative Heilmethoden ausprobiert?</label>
+        <div class="checkbox-group">
+          <label><input type="radio" name="alternativ" value="Ja"> Ja</label>
+          <label><input type="radio" name="alternativ" value="Nein"> Nein</label>
+        </div>
+        <label>Wenn ja, welche? <input type="text" name="alternativDetails"></label>
+        <label>Unterschrift: <input type="text" name="unterschrift"></label>
+        <label>Datum: <input type="date" name="datum"></label>
+      </div>
+
+      <button type="submit">Formular absenden</button>
+    </div>
+  </form>
+
+  <script>
+    document.getElementById('anamnesebogen').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      let textOutput = "Anamnesebogen – Zusammenfassung\n\n";
+
+      // Hilfsfunktion für Radios
+      const getRadioValue = (name) => {
+        const checked = form.querySelector(`input[name="${name}"]:checked`);
+        return checked ? checked.value : "Keine Angabe";
+      };
+
+      // Hilfsfunktion für Checkboxen (mehrere mit gleichem Namen)
+      const getCheckboxValues = (name) => {
+        const checkedBoxes = form.querySelectorAll(`input[name="${name}"]:checked`);
+        return Array.from(checkedBoxes).map(cb => cb.value).join(", ") || "Keine Angabe";
+      };
+
+      // Einzelne Felder abfragen
+      const fields = {
+        "Name": form.name.value,
+        "Geburtsdatum": form.geburtsdatum.value,
+        "Geschlecht": getRadioValue("geschlecht"),
+        "Adresse": form.adresse.value,
+        "Telefonnummer": form.telefonnummer.value,
+        "E-Mail": form.email.value,
+        "Versicherungsnummer": form.versicherungsnummer.value,
+        "Beschwerden": form.beschwerden.value,
+        "Beschwerden seit": getRadioValue("dauer"),
+        "Beschwerden (1-10)": form.schmerzskala.value || "Keine Angabe",
+        "Begleitsymptome": getCheckboxValues("symptome"),
+        "Schmerzdetails": form.schmerzdaten.value,
+        "Besondere Anliegen": form.anliegen.value,
+        "Weitere Infos": form.weitereInfos.value,
+        "Alternative Methoden ausprobiert": getRadioValue("alternativ"),
+        "Welche Methoden": form.alternativDetails.value,
+        "Unterschrift": form.unterschrift.value,
+        "Datum": form.datum.value
+      };
+
+      for (const [label, value] of Object.entries(fields)) {
+        textOutput += `${label}: ${value}\n`;
+      }
+
+      // Unsichtbares DIV zur Übergabe an html2pdf
+      const tempDiv = document.createElement("div");
+      tempDiv.style.display = "none";
+      tempDiv.innerText = textOutput;
+      document.body.appendChild(tempDiv);
+
+      // PDF erzeugen
+      html2pdf().set({
+        margin: 1,
+        filename: 'Anamnesebogen_Zusammenfassung.pdf',
+        jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
+      })
+      .from(tempDiv)
+      .save()
+      .then(() => {
+        document.body.removeChild(tempDiv);
+        window.location.href = "danke.html";
+      });
+    });
+  </script>
+
+</body>
+</html>
