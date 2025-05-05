@@ -28,11 +28,6 @@ Der digitale Anamnesebogen bietet Patient*innen die Möglichkeit, schon vor dem 
 - **Barrierearme Gestaltung** für einfache Nutzung auf Desktop und Mobilgeräten  
 - **Datenschutzkonformität** durch lokale Verarbeitung *(kein Datenversand ohne Nutzerzustimmung)*
 
----
-
-## 📸 Vorschau
-
-*(Hier kannst du ein Screenshot oder GIF der Anwendung einfügen)*
 
 ---
 
